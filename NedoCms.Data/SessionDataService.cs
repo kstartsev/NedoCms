@@ -67,7 +67,7 @@ namespace NedoCms.Data
 
 		public int Update<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public int Update<TEntity>(IEnumerable<TEntity> entities, Action<TEntity> action) where TEntity : class
@@ -77,17 +77,17 @@ namespace NedoCms.Data
 
 		public int Update<TEntity>(IEnumerable<TEntity> entities, Action<TEntity, int> action) where TEntity : class
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public int Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Action<TEntity> action) where TEntity : class
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public int Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Action<TEntity, int> action) where TEntity : class
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public int Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
