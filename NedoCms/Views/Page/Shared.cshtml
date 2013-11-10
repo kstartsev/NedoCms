@@ -1,0 +1,85 @@
+﻿@using NedoCms.Extensions
+@using NedoCms.Mvc.Core.Extensions
+@model IEnumerable<NedoCms.PageEditor.Models.SharedControls.ControlListModel>
+
+@{
+	ViewBag.Title = "Shared controls";
+	Layout = "_Layout.cshtml";
+	
+	var items = Model.Safe().ToArray();
+}
+
+<div class="container">
+	<div class="row">
+		<h2>Shared controls</h2>
+		<div class="table-responsive">
+			<table class="table table-hover table-curved nedocms-list" id="shared-controls-list">
+				<thead>
+					<tr>
+						<th>@items.OrderableHeaderFor(x => x.Name)</th>
+						<th class="w150px">@items.OrderableHeaderFor(x => x.ModificationDate)</th>
+						<th class="actions-container">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (!items.Any())
+					{
+						<tr>
+							<td colspan="3" >
+								<div class="text-center">[No controls created]</div>
+							</td>
+						</tr>
+					}
+					else
+					{
+						foreach (var item in items)
+						{
+							<tr data-control="@item.Id">
+								<td>@item.Name</td>
+								<td class="w150px">@item.ModificationDate.ToString("yyyy-MM-dd HH:mm")</td>
+								<td class="actions-container">
+									<div class="dropdown">
+										<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#">Commands &nbsp;<b class="caret"></b></a>
+										<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+											<li>
+												<a href="javascript:void(0)" onclick="NedoCms.Editor.showEditor('@Url.Action("SharedDetails", new { item.Id })'); return false; " class="btn btn-link btn-xs">
+													<span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit properties
+												</a>
+											</li>
+											<li>
+												<a class="btn btn-link btn-xs btn-delete-control">
+													<span class="glyphicon glyphicon-trash"></span>&nbsp;Delete control
+												</a>
+											</li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+		
+		<a href="javascript:void(0)" onclick=" NedoCms.Editor.showEditor('@Url.Action("SharedDetails")'); return false; " class="btn btn-primary btn-sm pull-right">Create new control</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#shared-controls-list')
+			.listEx({ OrderBy: "ModificationDate", OrderByDirection: "desc", })
+			.on('click', 'a.btn-delete-control', function(e) {
+				if (e.preventDefault) e.preventDefault();
+
+				var control = $(this).closest('tr').data('control');
+				NedoCms.Editor.confirm('Confirm delete', 'Are you sure?', function() {
+					$.post('@Html.Raw(Url.Action("DeleteShared"))', { id: control })
+						.success(function() { window.location.href = '@Url.Action("Shared")'; })
+						.error(function() { NedoCms.Editor.error("Error dialog", "Error occured while deleting page"); });
+				});
+
+				return false;
+			});
+	})
+</script>

@@ -1,0 +1,79 @@
+﻿@model NedoCms.Data.Models.Page
+@{
+	ViewBag.Title = "Page content";
+	Layout = "_Layout.cshtml";
+}
+
+<div class="modal fade" id="save-confirmation-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Page saved successfully!</h4>
+			</div>
+			<div class="modal-body">
+				<p>Page changes were saved successfully!</p>
+			</div>
+			<div class="modal-footer">
+				<a href="@Url.Action("Index")" class="btn btn-default btn-sm w80px">Pages</a>
+				<button type="button" class="btn btn-primary btn-sm w80px" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section>
+	<div class="left-sidebar-narrow">
+		<div class="row text-center nopadding">
+			<p><a href="@Url.Action("Index")" class="no-decoration btn btn-link"><span class="glyphicon glyphicon-home sign"></span></a></p>
+			<p><a href="javascript:void(0)" id="show-toolbox" class="no-decoration"><span class="glyphicon glyphicon-align-justify sign"></span></a></p>
+		</div>
+	</div>
+	<div class="left-sidebar-wide">
+		<div class="row">
+			@Html.Action("Toolbox")
+		</div>
+	</div>
+</section>
+
+<div class="container">
+	<div class="row header-row">
+		<table cellpadding="0" cellspacing="0" id="ContentHeader" class="w100per">
+			<tr>
+				<td class="w250px"><h3>Edit page [ @Model.Title ]</h3></td>
+				<td>
+					<div class="text-right header-buttons">
+						<button type="button" class="btn btn-success btn-sm w80px" data-loading-text="<span class='icon-spinner'></span> Saving..." onclick="NedoCms.Editor.saveContent(this); return true;">Save</button>
+						<a href="@Url.Action("Index")" class="btn btn-default btn-sm w80px ml5px">Cancel</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="text-center" id="content-loader"><img src="@Url.Content("~/Content/intranet/images/ajax-loader.gif")" alt=""/></div>
+		<iframe id="ContentEditor" onload="$('#content-loader').hide();$(this).addClass('boarded');" frameborder="0" src="@Url.Action("ContentEditor", new { id = Model.Id })"></iframe>
+	</div>
+</div>
+<div id="editors-placeholder"></div>
+		
+<script type="text/javascript">
+	window.$$PageId = '@Model.Id';
+	window.$$SaveEditorContentUrl = '@Url.Action("SaveEditorContent")';
+
+	$(document).ready(function () {
+		// adding information
+		$('.left-sidebar-narrow #show-toolbox').click(function () {
+			$('.left-sidebar-narrow').hide('slide', { direction: 'left' }, 200);
+			$('.left-sidebar-wide').show('slide', { direction: 'left' }, 300);
+		});
+		$('.left-sidebar-wide').mouseleave(function () {
+			setTimeout(function() {
+				$('.left-sidebar-wide').hide('slide', { direction: 'left' }, 200);
+				$('.left-sidebar-narrow').show('slide', { direction: 'left' }, 200);
+			}, 500);
+		});
+	});
+</script>
+		
+
+
+

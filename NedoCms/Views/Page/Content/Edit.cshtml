@@ -1,0 +1,27 @@
+﻿@inherits NedoCms.Common.Paging.EditPage<NedoCms.Data.Models.Page>
+
+@{
+	ViewBag.Title = "EditPreview";
+}
+
+@* for each public site we will know if we should add those styles/scripts on page or not *@
+<link href="@Url.Content("~/Content/intranet/css/editor.layouting.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/intranet/css/jquery.contextMenu.css")" rel="stylesheet" type="text/css" />
+
+@* this will be rendered in RenderBody for any master file we've injected *@
+<script type="text/javascript" src="@Url.Content("~/Scripts/ckeditor4/ckeditor.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ckeditor4/adapters/jquery.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.contextMenu.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/NedoCms.utils.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/NedoCms.editor.layouting.js")"></script>
+
+<script type="text/javascript">
+	CKEDITOR.disableAutoInline = true;
+	window.$$initializeEditor = function(config) {
+		config.filebrowserImageBrowseUrl = '@Url.Action("Images", "CkEditor")';
+		config.filebrowserImageUploadUrl = '@Url.Action("ImagesUpload", "CkEditor")';
+	};
+	window.$$PageId = '@Model.Id';
+	window.$$EditorForPageContentUrl = '@Url.Action("EditorForPageContent")';
+</script>
+

@@ -17,7 +17,7 @@ namespace NedoCms
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-			routes.MapRoute("Default", "{controller}/{action}/{id}", new {controller = "Home", action = "Index", id = UrlParameter.Optional});
+			routes.MapRoute("Default", "{controller}/{action}/{id}", new {controller = "Page", action = "Index", id = UrlParameter.Optional});
 		}
 
 		protected void Application_Start()

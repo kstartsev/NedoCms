@@ -1,0 +1,103 @@
+﻿@using NedoCms.Common.Extensions
+@using NedoCms.Models.Google
+@model MapModel
+
+@{
+	var original= Model.Markers.Safe().ToArray();
+	var markers = original.UnionIf(() => original.Length == 0, () => new MapPoint().Enumerate());
+}
+
+<div class="modal fade">
+	@using (Html.BeginForm("GoogleMapSubmit", "Page", FormMethod.Post, new { @class = "form-horizontal form-nowrap", role = "form" }))
+	{
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<h3>Google map</h3>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Center X</label>
+						<div class="col-lg-9">
+							@Html.TextBoxFor(x => x.Center.Latitude, new { @class = "form-control" })
+							<span>@Html.ValidationMessageFor(x => x.Center.Latitude)</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Center Y</label>
+						<div class="col-lg-9">
+							@Html.TextBoxFor(x => x.Center.Longitude, new { @class = "form-control" })
+							<span>@Html.ValidationMessageFor(x => x.Center.Longitude)</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">@Html.NameFor(x => x.Zoom)</label>
+						<div class="col-lg-9">
+							@Html.TextBoxFor(x => x.Zoom, new { @class = "form-control" })
+							<span>@Html.ValidationMessageFor(x => x.Zoom)</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">@Html.NameFor(x => x.Type)</label>
+						<div class="col-lg-9">
+							@Html.DropDownListFor(x => x.Type, Html.ConstList(Model.Type), new { @class = "form-control" })
+							<span>@Html.ValidationMessageFor(x => x.Type)</span>
+						</div>
+					</div>
+					<div class="form-group" id="markers-group">
+						<label class="col-lg-3 control-label">@Html.NameFor(x => x.Markers)</label>
+						<div class="col-lg-9">
+							@foreach (var point in markers)
+							{
+								<div class="input-group" style="padding-bottom: 5px;">
+									@Html.Partial("Popups/GoogleMapPoint", point)
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:void(0)" class="btn btn-default btn-sm w80px" data-dismiss="modal" aria-hidden="true">Cancel</a>
+					<button class="btn btn-success btn-sm w80px" type="submit">Save</button>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		(function () {
+			var tbl = $('#markers-group').on('click', '.add-marker', function (e) {
+				if (e && e.preventDefault) e.preventDefault();
+
+				var add = $(this).closest('.input-group');
+				var clone = template.clone();
+				clone.find('input:text').val('');
+				add.before(clone);
+				update(clone);
+
+				return false;
+			}).on('click', '.remove-marker', function(e) {
+				if (e && e.preventDefault) e.preventDefault();
+				if (!window.confirm("Are you sure?")) return false;
+				$(this).closest('.input-group').remove();
+				update();
+				return false;
+			});
+			var template = tbl.find('.input-group:first').clone();
+			
+			var update = function (item) {
+				var items = tbl.find('.input-group');
+				items.each(function (i, itm) {
+					if (i == (items.length - 1)) {
+						$(itm).find('.remove-marker').hide();
+						$(itm).find('.add-marker').show();
+					}
+				});
+				NedoCms.Utils.updateCollection(tbl.find('.input-group'), 'Markers', item);
+			};
+			update();
+		})();
+	});
+</script>

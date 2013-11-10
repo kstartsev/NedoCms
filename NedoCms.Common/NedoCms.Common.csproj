@@ -32,12 +32,21 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AjaxAttribute.cs" />
+    <Compile Include="Attributes\OrderByAttribute.cs" />
+    <Compile Include="Attributes\OutputCacheExAttribute.cs" />
     <Compile Include="Extensions\CacheExtensions.cs" />
+    <Compile Include="Extensions\TagBuilderExtensions.cs" />
+    <Compile Include="Extensions\HeaderExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -78,6 +87,10 @@
     </Compile>
     <Compile Include="Extensions\ValueProviderExtensions.cs" />
     <Compile Include="Extensions\ViewDataExtensions.cs" />
+    <Compile Include="Images\ImageResult.Cache.cs" />
+    <Compile Include="Images\ImageResult.cs" />
+    <Compile Include="Images\ImageResult.Resize.cs" />
+    <Compile Include="Images\ResolveImageResult.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\Menu\Descriptor.cs" />
     <Compile Include="Models\Menu\Node.cs" />

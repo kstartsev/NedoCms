@@ -1,0 +1,100 @@
+﻿@using NedoCms.Common.Extensions
+@using NedoCms.Common.Models.Menu
+@using NedoCms.Models
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>@ViewBag.Title</title>
+		
+		<meta http-equiv="PRAGMA" content="NO-CACHE">
+
+		<link href="@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+		<link href="@Url.Content("~/Content/bootstrap/css/bootstrap-theme.min.css")" rel="stylesheet" type="text/css" />
+		<link href="@Url.Content("~/Content/intranet/css/editor.intranet.css")" rel="stylesheet" type="text/css" />
+		
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.0.3.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dnd_page_scroll.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.iframe-post-form.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.hooks.js")"></script>
+
+		<script type="text/javascript" src="@Url.Content("~/Scripts/nedocms.query.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/nedocms.list.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/nedocms.utils.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/nedocms.editor.content.js")"></script>
+
+		<script type="text/javascript" src="@Url.Content("~/Scripts/ckeditor4/ckeditor.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/ckeditor4/adapters/jquery.js")"></script>
+	</head>
+	<body>
+		<div id="editor-modal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content"></div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="confirmation-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body"><p></p></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm w80px" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success btn-sm w80px">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="error-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body"><p></p></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-sm w80px" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<header role="banner" class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Obiq AB</a>
+				</div>
+				<nav role="navigation" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						@foreach (var item in Html.Menu(Menu.Items))
+						{
+							<li class="@(item.IsActive ? "active" : string.Empty)">
+								<a href="@item.Url">@item.Options.Text</a>
+							</li>
+						}
+					</ul>
+				</nav>
+			</div>
+			@RenderSection("HeaderSection", false)
+		</header>
+		<main>
+			@RenderSection("MainSection", false)
+			@RenderBody()
+		</main>
+		<footer>@RenderSection("FooterSection", false)</footer>
+	</body>
+</html>

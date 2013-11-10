@@ -1,0 +1,75 @@
+﻿@using NedoCms.Common.Extensions
+
+@model Tuple<IEnumerable<NedoCms.Models.Page.PageModel>, int>
+
+@{
+	var styles = new[] {"success", "warning"};
+	
+	var masters = Html.Masters().Safe().ToArray();
+	var items = Model.Item1.Safe().ToArray();
+	var level = Model.Item2;
+	var style = level == 0 ? "" : styles[level%styles.Length];
+}
+
+@if (!items.Any())
+{
+	<tr class="@style">
+		<td colspan="5" >
+			<div class="text-center">[No pages created]</div>
+		</td>
+	</tr>
+}
+else
+{
+	foreach (var item in items)
+	{
+		var master = masters.Where(x => x.Value == item.Master).Select(x => x.Text).FirstOrDefault().Either(item.Master);
+		var disabled = item.HasChildren ? "disabled=\"disabled\"" : "";
+
+		<tr data-page="@item.Id" data-parent="@item.Parent" data-level="@level" class="@style">
+			<td class="w1em">
+				@if (item.HasChildren)
+				{
+					<a class="btn btn-link btn-xs no-decoration btn-expand"><span class="glyphicon glyphicon-chevron-right"></span></a>
+					<a class="btn btn-link btn-xs no-decoration btn-collapse"><span class="glyphicon glyphicon-chevron-down"></span></a>
+				}
+			</td>
+			<td>@item.Title</td>
+			<td class="w250px">@master</td>
+			<td class="w150px">@item.MenuOrder</td>
+			<td class="actions-container">
+				<div class="dropdown">
+					<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#">Commands &nbsp;<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						<li>
+							<a href="javascript:void(0)" onclick="NedoCms.Editor.showEditor('@Url.Action("Edit", new { item.Id })'); return false; " class="btn btn-link btn-xs">
+								<span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit properties
+							</a>
+						</li>
+						<li>
+							<a href="@Url.Action("Content", new {id = item.Id})" class="btn btn-link btn-xs">
+								<span class="glyphicon glyphicon-edit"></span>&nbsp;Edit content</a>
+						</li>
+						<li>
+							<a class="btn btn-link btn-xs btn-delete-page" @disabled>
+								<span class="glyphicon glyphicon-trash"></span>&nbsp;Delete page
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="javascript:void(0)" onclick="NedoCms.Editor.showEditor('@Url.Action("Edit", new { parentid = item.Id })'); return false; " class="btn btn-link btn-xs">
+								<span class="glyphicon glyphicon-plus"></span>&nbsp;Add subpage
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="@Url.Action("Page", "Front", new {id = item.Id})" target="_blank" class="btn btn-link btn-xs">
+								<span class="glyphicon glyphicon-search"></span>&nbsp;Preview page
+							</a>
+						</li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+	}
+}

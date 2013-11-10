@@ -91,6 +91,7 @@ code.green {
 .w80px {
 	width: 80px !important;
 }
+
 .w100per {
 	width: 100%;
 }
@@ -236,45 +237,55 @@ code.green {
 		border-radius: 0 0 6px 0;
 	}
 
-.deusex-list tr > th {
+.nedocms-list tr > th {
 	background-color: #2c3e50;
 }
 
-	.deusex-list tr > th > a {
+	.nedocms-list tr > th > a {
 		color: #ecf0f1;
 	}
 
-.deusex-list tr > td > a {
+.nedocms-list tr > td > a {
 	color: #333;
 }
 
-	.deusex-list tr > td > a.btn-expand.on {
+	.nedocms-list tr > td > a.btn-expand.on {
 		display: none;
 	}
 
-	.deusex-list tr > td > a.btn-collapse {
+	.nedocms-list tr > td > a.btn-collapse {
 		display: none;
 	}
 
-		.deusex-list tr > td > a.btn-collapse.on {
+		.nedocms-list tr > td > a.btn-collapse.on {
 			display: inline;
 		}
 
-.deusex-list tr.template {
+.nedocms-list tr.template {
 	display: none;
 }
 
-.deusex-list th > span.glyphicon {
+.nedocms-list th > span.glyphicon {
 	color: #2c3e50;
 	cursor: default;
 	padding: 1px 5px;
 }
 
-.shared-controls-list { list-style-type: none; }
-.shared-controls-list label { font-weight: normal;}
-.shared-controls-list input[type='radio'] { width: 2em; }
+.shared-controls-list {
+	list-style-type: none;
+}
 
-.loading { display: none;}
+	.shared-controls-list label {
+		font-weight: normal;
+	}
+
+	.shared-controls-list input[type='radio'] {
+		width: 2em;
+	}
+
+.loading {
+	display: none;
+}
 
 #content-loader {
 	line-height: 400px;

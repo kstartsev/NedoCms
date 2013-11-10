@@ -1,0 +1,54 @@
+﻿@using NedoCms.Common.Extensions
+@model NedoCms.Models.CkEditor.ImagesModel
+@{
+    Layout = null;
+
+	const int maxNameLength = 30;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Choose an Image</title>
+		<script type="text/javascript">
+			function setSelectedImage(fileUrl) {
+				if (window.opener) {
+					window.opener.CKEDITOR.tools.callFunction('@Model.CKEditorFuncNum', fileUrl);
+				}
+			}
+		</script>
+		<style type="text/css">
+			body {overflow-x:hidden;}
+			.flow ul { width: 100%; }
+			.flow ul li { list-style: none; margin: 15px; float: left;cursor: pointer; }
+			.flow ul li img { border-radius: 3px;display: block;height: 250px;width: 250px; }
+		</style>
+	</head>
+	<body>
+		@if (Model.Images.Safe().Any())
+		{
+			<div class="flow">
+				<ul>
+					@foreach (var img in Model.Images.OrderBy(x => x.Name))
+					{
+						var name = img.Name.Safe();
+						if (name.Length > maxNameLength)
+						{
+							name = name.Substring(0, maxNameLength) + "...";
+						}
+						<li onclick="javascript:setSelectedImage('@img.Url'); window.close();">
+							<img src="@img.Url"  alt="@img.Name" />
+							<label title="@img.Name">@name</label>
+						</li>
+					}
+				</ul>
+			</div>
+		}
+		else
+		{
+			<div style="text-align: center; height: 480px; line-height: 480px;">
+				<label style="font-weight: bold;">You haven't uploaded images yet.</label>
+			</div>
+		}
+		<br/>
+	</body>
+</html>

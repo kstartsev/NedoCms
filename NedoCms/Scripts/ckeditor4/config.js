@@ -11,6 +11,7 @@ CKEDITOR.editorConfig = function(config) {
 	config.enterMode = CKEDITOR.ENTER_BR;
 	config.autoParagraph = false;
 	config.allowedContent = true;
+	config.skin = 'moono-color';
 	config.toolbarCanCollapse = false;
 	config.colorButton_enableMore = false;
 	config.jqueryOverrideVal = true;

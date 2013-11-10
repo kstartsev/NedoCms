@@ -1,0 +1,19 @@
+﻿@using NedoCms.Common.Paging
+@model NedoCms.Models.Page.PageContentModel
+
+@{ var autoid = Guid.NewGuid() + "-header";}
+
+<div class="item-editor-container" data-contentid="@Model.Id" data-settings="@Model.Settings" data-shared="@Model.SharedId" id="@autoid">
+	<div class="item-editor-header">
+		<a href="javascript:void(0)" class="sort-handle"><i class="hicon hicon-handle"></i></a>
+		<a href="javascript:void(0)" class="remove-editor"><i class="hicon hicon-remove"></i></a>
+		<a href="javascript:void(0)" class="edit-button"><i class="hicon hicon-edit"></i></a>
+		@Html.DescriptionFor(Model)
+	</div>
+	@Html.EditorFor(Model)
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		NedoCms.Layouting().interactions($('#@autoid'));
+	});
+</script>

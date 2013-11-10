@@ -1,0 +1,42 @@
+﻿@using NedoCms.Models.Page
+@model NedoCms.Models.TextModel
+
+@{
+	var contentModel = (PageContentModel) ViewBag.ContentModel;
+	var autoid = Guid.NewGuid() + "-hmtl";
+}
+
+@if (contentModel.SharedId.HasValue)
+{
+	<div id="@autoid" class="item-editor shared" data-value-type="html">@Html.Raw(Model.Text)</div>
+}
+else
+{
+	<div id="@autoid" contenteditable="true" class="item-editor" data-value-type="html" data-edit-dialog="$htmlContentSettings">@Html.Raw(Model.Text)</div>
+}
+<script type="text/javascript">
+	$(document).ready(function () {
+		NedoCms.Layouting().ckeditor.create('@autoid');
+
+		if (!window.$htmlContentSettings) {
+			window.$htmlContentSettings = function (editor) {
+				var parent = editor.closest('.item-editor-container');
+				NedoCms.Editor.renderModal({
+					instantiate: function (callback) {
+						var url = '@Url.Action("HtmlPopup", new {sharedid = "-sharedid-"})'.replace(/-sharedid-/gi, parent.data('shared'));
+						$.get(url).success(function (html) { callback(html); });
+					},
+					save: function (modal, result) {
+						if (result && result.Found) {
+							editor.html(result.Content).attr('contenteditable', false).addClass('shared');
+							parent.data('shared', result.ContentId);
+
+							NedoCms.Layouting().ckeditor.destroy(editor.attr('id'));
+						}
+						NedoCms.Layouting().resize();
+					}
+				});
+			};
+		}
+	});
+</script>

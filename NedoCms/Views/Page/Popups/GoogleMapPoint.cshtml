@@ -1,0 +1,23 @@
+﻿@using NedoCms.Common.Extensions
+@model NedoCms.Models.Google.MapPoint
+
+@using (Html.BeginCollectionItem("Markers"))
+{
+	<div class="col-lg-6 nopadding">
+		@Html.TextBoxFor(x => x.Latitude, new {@class = "form-control", placeholder = Html.NameFor(x => x.Latitude)})
+		@Html.ValidationMessageFor(x => x.Latitude)
+	</div>
+	<div class="col-lg-6 nopadding">
+		@Html.TextBoxFor(x => x.Longitude, new {@class = "form-control no-border-radius", placeholder = Html.NameFor(x => x.Longitude)})
+		@Html.ValidationMessageFor(x => x.Longitude)
+	</div>
+	
+	<span class="input-group-btn">
+		<button class="btn remove-marker" type="button">
+			<span class="glyphicon glyphicon-minus"></span>
+		</button>
+		<button class="btn add-marker" type="button" style="display: none;">
+			<span class="glyphicon glyphicon-plus"></span>
+		</button>
+	</span>
+}

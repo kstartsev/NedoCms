@@ -72,7 +72,7 @@ namespace NedoCms.Data
 
 		public int Update<TEntity>(IEnumerable<TEntity> entities, Action<TEntity> action) where TEntity : class
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public int Update<TEntity>(IEnumerable<TEntity> entities, Action<TEntity, int> action) where TEntity : class

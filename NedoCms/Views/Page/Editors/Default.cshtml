@@ -1,0 +1,8 @@
+﻿@model NedoCms.Common.Paging.Content.PageContentDescription
+
+@{ var autoid = Guid.NewGuid() + "-empty"; }
+
+<div id="@autoid"  class="item-editor" data-value-type="none">
+	@*Invoking action as is and not via ajax because underlying action can contain ajax call itself*@
+	@Html.Action(Model.View.Action, Model.View.Controller, new { Container = "#" + autoid })
+</div>

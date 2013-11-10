@@ -1,0 +1,23 @@
+﻿@using NedoCms.Common.Extensions
+@model NedoCms.Models.Page.PageMetadataModel
+
+@using (Html.BeginCollectionItem("Metadata"))
+{
+	<div class="col-lg-6 nopadding">
+		@Html.TextBoxFor(x => x.Key, new {@class = "form-control", placeholder = Html.NameFor(x => x.Key)})
+		<span>@Html.ValidationMessageFor(x => x.Key)</span>
+	</div>
+	<div class="col-lg-6 nopadding">
+		@Html.TextBoxFor(x => x.Value, new {@class = "form-control no-border-radius", placeholder = Html.NameFor(x => x.Value)})
+		@Html.ValidationMessageFor(x => x.Value)
+	</div>
+	
+	<span class="input-group-btn">
+		<button class="btn remove-metadata" type="button">
+			<span class="glyphicon glyphicon-minus"></span>
+		</button>
+		<button class="btn add-metadata" type="button" style="display: none;">
+			<span class="glyphicon glyphicon-plus"></span>
+		</button>
+	</span>
+}

@@ -1,0 +1,131 @@
+﻿@using NedoCms.Common.Extensions
+@using NedoCms.Models.Page
+@model PageModel
+
+@{
+	var original = Model.Metadata.Safe().ToArray();
+	var metadata = original.UnionIf(() => original.Length == 0, () => new PageMetadataModel().Enumerate());
+}
+
+@using (Html.BeginForm("Edit", "Page", FormMethod.Post, new { @class = "form-horizontal form-nowrap", role = "form" }))
+{
+	@Html.HiddenFor(x => x.Id)
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Page settings</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.Title)</label>
+			<div class="col-lg-9">
+				@Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.Title)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.PageType)</label> 
+			<div class="col-lg-9">
+				@Html.DropDownListFor(x => x.PageType, Html.ConstList((PageTypeModel)Model.PageType, true).WithEmpty("-----"), new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.PageType)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.MenuLabel)</label>
+			<div class="col-lg-9">
+				@Html.TextBoxFor(x => x.MenuLabel, new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.MenuLabel)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.MenuOrder)</label>
+			<div class="col-lg-9">
+				@Html.TextBoxFor(x => x.MenuOrder, new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.MenuOrder)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.Parent)</label>
+			<div class="col-lg-9">
+				@Html.DropDownListFor(x => x.Parent, Html.Pages(Model.Parent).WithEmpty("-----"), new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.Parent)</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-lg-3 control-label" for="@Html.NameFor(x => x.Visible)">@Html.NameFor(x => x.Visible)</label>
+			<div class="col-lg-9">
+				@Html.CheckBoxFor(x => x.Visible, new { @class = "checkbox" })
+				<span>@Html.ValidationMessageFor(x => x.Visible)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.Route)</label>
+			<div class="col-lg-9">
+				@Html.TextBoxFor(x => x.Route, new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.Route)</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.Master)</label>
+			<div class="col-lg-9">
+				@Html.DropDownListFor(x => x.Master, Html.Masters().WithEmpty("-----"), new { @class = "form-control" })
+				<span>@Html.ValidationMessageFor(x => x.Master)</span>
+			</div>
+		</div>
+		<div class="form-group" id="metadata-group">
+			<label class="col-lg-3 control-label">@Html.NameFor(x => x.Metadata)</label>
+			<div class="col-lg-9">
+				@foreach (var md in metadata)
+				{
+					<div class="input-group" style="padding-bottom: 5px;">
+						@Html.Partial("Index/Metadata", md)
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="text-center loading">
+			<img src="@Url.Content("~/Content/intranet/images/ajax-loader.gif")" alt="" />
+		</div>
+		<a href="javascript:void(0)" class="btn btn-default btn-sm w80px" data-dismiss="modal" aria-hidden="true">Cancel</a>
+		<button type="submit" class="btn btn-success btn-sm w80px">Save</button>
+	</div>
+}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		(function () {
+			var tbl = $('#metadata-group').on('click', '.add-metadata', function (e) {
+				if (e && e.preventDefault) e.preventDefault();
+
+				var add = $(this).closest('.input-group');
+				var clone = template.clone();
+				clone.find('input:text').val('');
+				add.before(clone);
+				update(clone);
+
+				return false;
+			}).on('click', '.remove-metadata', function (e) {
+				if (e && e.preventDefault) e.preventDefault();
+				if (!window.confirm("Are you sure?")) return false;
+				$(this).closest('.input-group').remove();
+				update();
+				return false;
+			});
+			var template = tbl.find('.input-group:first').clone();
+
+			var update = function (item) {
+				var items = tbl.find('.input-group');
+				items.each(function (i, itm) {
+					if (i == (items.length - 1)) {
+						$(itm).find('.remove-metadata').hide();
+						$(itm).find('.add-metadata').show();
+					}
+				});
+				NedoCms.Utils.updateCollection(tbl.find('.input-group'), 'Metadata', item);
+			};
+			update();
+		})();
+	});
+</script>

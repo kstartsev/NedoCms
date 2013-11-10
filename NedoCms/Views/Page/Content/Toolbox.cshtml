@@ -1,0 +1,26 @@
+﻿@using NedoCms.Common.Extensions
+@model IEnumerable<NedoCms.Models.Page.ToolbarGroup>
+@{
+	var groups = Model.Safe().ToArray();
+}
+
+<ul class="nav" id="wide-toolbar">
+	@if (groups.Any())
+	{
+		foreach (var group in groups.OrderBy(x => x.Name))
+		{
+			<li class="nav-header">@group.Name</li>
+			<li class="nav-header-separator"><span>&nbsp;</span></li>
+			foreach (var child in group.Items.Safe().OrderBy(x => x.Name))
+			{
+				<li class="nav-content" draggable="true" ondragstart='onDragStart(event, "@child.Settings");' ondragend="onDragEnd(event);">
+					<a href="javascript:void(0)">@child.Name</a>
+				</li>
+			}
+		}
+	}
+	else
+	{
+		<li><div class="text-center">[No toolbar items found]</div></li>
+	}
+</ul>

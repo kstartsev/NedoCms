@@ -1,0 +1,119 @@
+﻿@using NedoCms.Common.Extensions
+
+@model IEnumerable<NedoCms.Models.Page.PageModel>
+
+@{
+	ViewBag.Title = "Page list";
+	Layout = "_Layout.cshtml";
+
+	var items = Model.Safe().ToArray();
+}
+
+@section MainSection
+{
+	<div class="container">
+		<div class="row">
+			<h2>Pages</h2>
+			<div class="table-responsive">
+				<table class="table table-hover table-curved nedocms-list" id="pages-list">
+					<thead>
+						<tr>
+							<th class="w1em">
+								@*adding this here in order to keep width of the column same as than some items have children*@
+								<span class="glyphicon glyphicon-chevron-right no-decoration"></span>
+							</th>
+							<th>@items.OrderableHeaderFor(x => x.Title)</th>
+							<th class="w250px">@items.OrderableHeaderFor(x => x.Master)</th>
+							<th class="w150px">@items.OrderableHeaderFor(x => x.MenuOrder, "Order")</th>
+							<th class="actions-container">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						@Html.Partial("Index/Children", Tuple.Create(Model, 0))
+						<tr class="template"><td colspan="5"><div class="text-center"><img src="@Url.Content("~/Content/intranet/images/ajax-loader.gif")" alt="" /></div></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+			
+		<a href="javascript:void(0)" onclick=" NedoCms.Editor.showEditor('@Url.Action("Edit")'); return false; " class="btn btn-primary btn-sm pull-right">Create new page</a>
+	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var toggleExistingChildren = function(page, expand) {
+				if (expand) {
+					table.find('tr[data-parent="' + page + '"]').each(function() {
+						// setting initial state for button
+						$(this).find('.btn-expand').removeClass('on');
+						$(this).find('.btn-collapse').removeClass('on');
+						
+						$(this).show();
+					});
+				}
+				else {
+					table.find('tr[data-parent="' + page + '"]').each(function() {
+						$(this).hide();
+						toggleExistingChildren($(this).data('page'), expand);
+					});
+				}
+			};
+			
+			var toggleChildren = function(parent, expand, event) {
+				if (event && event.preventDefault) event.preventDefault();
+
+				parent.find('.btn-expand').toggleClass('on');
+				parent.find('.btn-collapse').toggleClass('on');
+
+				var row = parent.closest('tr');
+				var page = row.data('page');
+				var level = (row.data('level') || 0);
+				if (expand) {
+					if (row.data('loaded')) {
+						toggleExistingChildren(page, true);
+						return false;
+					}
+					row.data('loaded', true);
+
+					var clone = template.clone().removeClass('template');
+					row.after(clone);
+					$.get('@Html.Raw(Url.Action("Children", new { page = "-page-", level = "-level-" }))'.replace(/-page-/gi, page).replace(/-level-/gi, level + 1))
+						.success(function(content) {
+							clone.remove();
+							row.after(content);
+						})
+						.error(function() {
+							row.data('loaded', false); // marking item as not loaded
+							row.next().hide(); // hiding loader row
+
+							// setting buttons state as it was before
+							parent.find('.btn-expand').toggleClass('on');
+							parent.find('.btn-collapse').toggleClass('on');
+
+							NedoCms.Editor.error("Error dialog", "Error occured while loading child pages.");
+						});
+				} else toggleExistingChildren(page, false);
+
+				return false;
+			};
+
+			var table = $('#pages-list')
+				.listEx({ OrderBy: "MenuOrder", OrderByDirection: "asc", })
+				.on('click', 'a.btn-expand', function(e) { return toggleChildren($(this).closest('td'), true, e); })
+				.on('click', 'a.btn-collapse', function(e) { return toggleChildren($(this).closest('td'), false, e); })
+				.on('click', 'a.btn-delete-page', function(e) {
+					if (e.preventDefault) e.preventDefault();
+					
+					var page = $(this).closest('tr').data('page');
+					NedoCms.Editor.confirm('Confirm delete', 'Are you sure?', function() {
+						$.post('@Html.Raw(Url.Action("Delete"))', { id: page })
+							.success(function() { window.location.href = '@Url.Action("Index")'; })
+							.error(function() { NedoCms.Editor.error("Error dialog", "Error occured while deleting page"); });
+					});
+					
+					return false;
+				});
+			var template = table.find('tr.template');
+		});
+	</script>
+}

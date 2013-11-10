@@ -1,0 +1,31 @@
+﻿@using NedoCms.Common.Extensions
+@model NedoCms.Models.SharedControls.ControlEditModel
+
+@using (Html.BeginForm("SharedDetails", "Page", FormMethod.Post, new { @class = "form-nowrap", role = "form" }))
+{
+	@Html.HiddenFor(x => x.Id)
+	@Html.AntiForgeryToken()
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Content editor</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label class="control-label">@Html.NameFor(x => x.Name)</label>
+			@Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+			<span>@Html.ValidationMessageFor(x => x.Name)</span>
+		</div>
+		<div class="form-group">
+			<label class="control-label">@Html.NameFor(x => x.Content)</label>
+			@Html.HiddenFor(x => x.Content, new { @class = "content-editable" })
+			<span>@Html.ValidationMessageFor(x => x.Content)</span>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="text-center loading">
+			<img src="@Url.Content("~/Content/intranet/images/ajax-loader.gif")" alt="" />
+		</div>
+		<a href="javascript:void(0)" class="btn btn-default btn-sm w80px" data-dismiss="modal" aria-hidden="true">Cancel</a>
+		<button type="submit" class="btn btn-success btn-sm w80px">Save</button>
+	</div>
+}

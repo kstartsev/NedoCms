@@ -1,0 +1,32 @@
+﻿@model NedoCms.Models.TextModel
+		   
+@{ var autoid = Guid.NewGuid() + "-map-editor"; }
+
+<div  class="item-editor" data-value-type="custom" data-value-getter="$getGoogleMapValue" data-edit-dialog="$googleMapSettings">
+	@Html.HiddenFor(x => x.Text, new { @class = "content" })
+	<div id="@autoid">@Html.Action("GoogleMap", "Content", new { content = Model.Text })</div>
+</div>
+<script type="text/javascript">
+	if (!window.$getGoogleMapValue) {
+		window.$getGoogleMapValue = function(editor) {
+			return editor.find('input:hidden.content').val();
+		};
+	}
+	if (!window.$googleMapSettings) {
+		window.$googleMapSettings = function (editor) {
+			NedoCms.Editor.renderModal({
+				instantiate: function (callback) {
+					$.post('@Url.Action("GoogleMapPopup")', { content: window.$getGoogleMapValue(editor) })
+						.success(function (html) { callback(html); });
+				},
+				save: function (modal, result) {
+					editor.find('input:hidden.content').val(result);
+					$.post('@Url.Action("GoogleMap", "Content")', { content: window.$getGoogleMapValue(editor) }).success(function(html) {
+						$('#@autoid').html(html);
+						NedoCms.Layouting().resize();
+					});
+				}
+			});
+		};
+	} 
+</script>

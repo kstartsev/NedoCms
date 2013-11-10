@@ -1,0 +1,11 @@
+﻿@model NedoCms.Models.CkEditor.UploadResultModel
+@{
+	Layout = null;
+	var jsCall = string.Format("window.parent.CKEDITOR.tools.callFunction({0}, {1}, {2});"
+							   , Model.CKEditorFuncNum
+							   , Model.Url != null ? string.Format("\"{0}\"", Model.Url) : "null"
+							   , Model.Error != null ? string.Format("\"{0}\"", Model.Error) : "null");
+}
+<script type="text/javascript">
+	@Html.Raw(jsCall)
+</script>

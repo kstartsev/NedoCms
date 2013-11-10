@@ -1,0 +1,36 @@
+﻿@using System.Globalization
+@model NedoCms.PageEditor.Models.Google.MapModel
+
+@{
+	if (!Model.Center.Latitude.HasValue || !Model.Center.Longitude.HasValue)
+	{
+		return;
+	}
+	
+	Func<double?, string> convert = x => x.HasValue ? x.Value.ToString(CultureInfo.InvariantCulture) : "";
+	
+	var lat = convert(Model.Center.Latitude);
+	var lon = convert(Model.Center.Longitude);
+
+	var id = Guid.NewGuid() + "google-map";
+}
+
+<div id="@id" class="google-map"></div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var mapOptions = {
+			zoom: @Model.Zoom,
+			center: new google.maps.LatLng(@lat, @lon),
+			mapTypeId: google.maps.MapTypeId.ROADMAP /*TODO: fix type of the map*/
+		};
+		var map = new google.maps.Map(document.getElementById('@id'), mapOptions);
+		@foreach (var marker in Model.Markers.Where(x => x.Latitude.HasValue && x.Longitude.HasValue))
+		{
+			var x = convert(marker.Latitude);
+			var y = convert(marker.Longitude);
+			<text>
+			new google.maps.Marker({ position: new google.maps.LatLng(@x, @y), map: map });
+			</text>
+		}
+	});
+</script>
