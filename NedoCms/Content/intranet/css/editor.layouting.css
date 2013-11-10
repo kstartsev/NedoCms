@@ -1,0 +1,85 @@
+textarea{ resize: none;}
+
+div.page-content-item {
+	min-height: 40px;
+	border: 1px dashed #CEDBF4;
+	border-radius: 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	cursor: pointer;
+}
+
+	div.page-content-item.colored {
+		background-color: #F2EEE3;
+	}
+
+	div.page-content-item.hovered {
+		background-color: #CEDBF4 !important;
+		color: #ffffff;
+	}
+
+div.page-content-item-drop-area {
+	color: #8A92A0;
+	height: 40px;
+	line-height: 40px;
+	text-align: left;
+	padding: 0 5px;
+}
+
+	div.page-content-item-drop-area:hover, div.page-content-item-drop-area.hovered {
+		background-color: #CEDBF4 !important;
+		color: #ffffff;
+	}
+
+	div.page-content-item-drop-area.colored {
+		background-color: #F2EEE3;
+	}
+
+.item-editor {
+	min-height: 40px;
+	margin: 0;
+	border-bottom: 1px dashed #CEDBF4;
+}
+.item-editor.shared { background-color: #ECF0F1; }
+
+.item-editor-header {
+	background-color: #CEDBF4;
+	min-height: 28px;
+	line-height: 28px;
+	padding: 0 0 0 4px;
+}
+
+	.item-editor-header a.remove-editor {
+		float: right;
+	}
+
+	.item-editor-header a.edit-button {
+		float: right;
+	}
+
+	.item-editor-header a.sort-handle {
+		float: left;
+	}
+
+.hicon {
+	background-image: url(../images/glyphicons-halflings.png);
+	height: 18px;
+	width: 18px;
+	background-repeat: no-repeat;
+}
+
+.hicon-remove {
+	display: inline-block;
+	background-position: -456px 4px;
+}
+
+.hicon-handle {
+	display: inline-block;
+	background-position: -168px -67px;
+}
+
+.hicon-edit {
+	display: inline-block;
+	background-position: -96px -68px;
+}

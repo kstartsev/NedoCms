@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="pageeditor" EntityNamespace="NedoCms.Data.Models" ContextNamespace="NedoCms.Data.Models" Class="EditorDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.PageMetadatas" Member="PageMetadatas">
+    <Type Name="PageMetadata">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Association Name="Page_PageMetadata" Member="Page" ThisKey="PageId" OtherKey="Id" Type="Page" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pages" Member="Pages">
+    <Type Name="Page">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="Master" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MenuLabel" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MenuOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Visible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Route" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ParentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="FullRoute" Type="System.String" DbType="nvarchar(2056) not null" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int16" DbType="tinyint not null" CanBeNull="false" />
+      <Association Name="Page_PageMetadata" Member="PageMetadatas" ThisKey="Id" OtherKey="PageId" Type="PageMetadata" />
+      <Association Name="Page_Page" Member="Children" ThisKey="Id" OtherKey="ParentId" Type="Page" />
+      <Association Name="Page_PageContent" Member="PageContents" ThisKey="Id" OtherKey="PageId" Type="PageContent" />
+      <Association Name="Page_Page" Member="Parent" ThisKey="ParentId" OtherKey="Id" Type="Page" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PageContents" Member="PageContents">
+    <Type Name="PageContent">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PlaceHolder" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Settings" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SharedContentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="Page_PageContent" Member="Page" ThisKey="PageId" OtherKey="Id" Type="Page" IsForeignKey="true" />
+      <Association Name="SharedContent_PageContent" Member="SharedContent" ThisKey="SharedContentId" OtherKey="Id" Type="SharedContent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SharedContents" Member="SharedContents">
+    <Type Name="SharedContent">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ModificationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="SharedContent_PageContent" Member="PageContents" ThisKey="Id" OtherKey="SharedContentId" Type="PageContent" />
+    </Type>
+  </Table>
+</Database>

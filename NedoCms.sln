@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NedoCms", "NedoCms\NedoCms.csproj", "{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NedoCms.Data", "NedoCms.Data\NedoCms.Data.csproj", "{9613A825-3B13-43A4-9B5A-A80EBC876987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NedoCms.Common", "NedoCms.Common\NedoCms.Common.csproj", "{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9613A825-3B13-43A4-9B5A-A80EBC876987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9613A825-3B13-43A4-9B5A-A80EBC876987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9613A825-3B13-43A4-9B5A-A80EBC876987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9613A825-3B13-43A4-9B5A-A80EBC876987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
