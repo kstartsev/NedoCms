@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
+using NedoCms.Common.Extensions;
 using NedoCms.Data;
 using NedoCms.Data.Models;
 using NedoCms.Models;
 using NedoCms.Models.Page;
-using NedoCms.Common.Extensions;
 
 namespace NedoCms.Controllers
 {
@@ -23,11 +24,7 @@ namespace NedoCms.Controllers
 			if (page == null) return new EmptyResult();
 
 			ViewBag.Title = page.Title;
-			ViewBag.Metadata = page.PageMetadatas.Safe().Select(x => new PageMetadataModel
-			{
-				Key = x.Key,
-				Value = x.Value
-			}).ToArray();
+			ViewBag.Metadata = page.PageMetadatas.Safe().ToList().Select(Mapper.Map<PageMetadata, PageMetadataModel>);
 
 			return View(null, page.Master, page);
 		}

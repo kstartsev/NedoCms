@@ -10,13 +10,10 @@ using NedoCms.Common.Attributes;
 using NedoCms.Common.Extensions;
 using NedoCms.Common.Models.Sorting;
 using NedoCms.Common.Paging.Content;
-using NedoCms.Controllers;
 using NedoCms.Data;
 using NedoCms.Data.Extensions;
 using NedoCms.Data.Models;
 using NedoCms.Models.Page;
-
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PageController), "InitMapping")]
 
 namespace NedoCms.Controllers
 {
@@ -25,14 +22,6 @@ namespace NedoCms.Controllers
 	/// </summary>
 	public sealed partial class PageController : EfDataController<EditorDataContext>
 	{
-		public static void InitMapping()
-		{
-			Mapper.CreateMap<PageMetadata, PageMetadataModel>();
-			Mapper.CreateMap<Page, PageModel>()
-			      .ForMember(x => x.HasChildren, exp => exp.MapFrom(x => x.Children.Safe().Any()))
-				  .ForMember(x => x.Metadata, exp => exp.MapFrom(x => x.PageMetadatas.Safe().Select(Mapper.Map<PageMetadata, PageMetadataModel>)));
-		}
-
 		/// <summary>
 		/// Renders list of created pages
 		/// </summary>
