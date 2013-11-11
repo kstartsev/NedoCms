@@ -8,21 +8,21 @@ using System.Web.Mvc;
 using NedoCms.Common.Extensions;
 using NedoCms.Data.Interfaces;
 
-namespace NedoCms.Data
+namespace NedoCms.Data.Session
 {
 	/// <summary>
 	/// Naive data storage implementation on top of session object
 	/// </summary>
-	public sealed class SessionDataService : IDataService
+	public sealed class DataService : IDataService
 	{
 		private const string KeyPrefix = "F4A1B79190CB4012AAAD61E6DF88FC48";
 		private readonly Controller _controller;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SessionDataService"/> class.
+		/// Initializes a new instance of the <see cref="DataService"/> class.
 		/// </summary>
 		/// <param name="controller">The controller.</param>
-		public SessionDataService(Controller controller)
+		public DataService(Controller controller)
 		{
 			_controller = controller;
 		}
@@ -47,11 +47,6 @@ namespace NedoCms.Data
 		}
 
 		public TEntity SelectById<TEntity>(object id) where TEntity : class
-		{
-			throw new NotImplementedException();
-		}
-
-		public int Execute(string command, params object[] parameters)
 		{
 			throw new NotImplementedException();
 		}

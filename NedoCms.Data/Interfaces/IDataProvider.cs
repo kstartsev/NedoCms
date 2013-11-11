@@ -32,14 +32,6 @@ namespace NedoCms.Data.Interfaces
 		TEntity SelectById<TEntity>(object id) where TEntity : class;
 
 		/// <summary>
-		/// Executes the specified command.
-		/// </summary>
-		/// <param name="command">The command.</param>
-		/// <param name="parameters">The parameters.</param>
-		/// <returns>The result of the operation.</returns>
-		int Execute(string command, params object[] parameters);
-
-		/// <summary>
 		/// Inserts the specified entities into the underlying data source.
 		/// </summary>
 		/// <typeparam name="TEntity">The type of the entity.</typeparam>
