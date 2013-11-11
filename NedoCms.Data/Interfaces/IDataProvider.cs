@@ -11,12 +11,6 @@ namespace NedoCms.Data.Interfaces
 	public interface IDataProvider
 	{
 		/// <summary>
-		/// Gets or sets the options.
-		/// </summary>
-		/// <value>The options.</value>
-		IDataOptions Options { get; set; }
-
-		/// <summary>
 		/// Selects the collection of entities of the specified type.
 		/// </summary>
 		/// <typeparam name="TEntity">The type of the entity.</typeparam>

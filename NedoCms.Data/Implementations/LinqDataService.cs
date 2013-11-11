@@ -12,18 +12,15 @@ namespace NedoCms.Data.Linq
 	/// <summary>
 	/// Implements <see cref="IDataService"/> with Linq to Sql data context as underlying data context.
 	/// </summary>
-	public class DataService<TDataContext> : IDataService, IDisposable where TDataContext : DataContext, new()
+	public class LinqDataService<TDataContext> : IDataService, IDisposable where TDataContext : DataContext, new()
 	{
 		private readonly TDataContext _context;
 
-		private DataOptions _dataOptions;
-		private System.IO.TextWriter _log;
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DataService{TDataContext}"/> class.
+		/// Initializes a new instance of the <see cref="LinqDataService{TDataContext}"/> class.
 		/// </summary>
 		/// <param name="createContext">The create context.</param>
-		public DataService(Func<TDataContext> createContext)
+		public LinqDataService(Func<TDataContext> createContext)
 		{
 			if (createContext == null) throw new ArgumentNullException("createContext");
 
@@ -36,53 +33,6 @@ namespace NedoCms.Data.Linq
 		public void Dispose()
 		{
 			_context.Dispose();
-
-			if (_log != null)
-			{
-				_log.Dispose();
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the options.
-		/// </summary>
-		/// <value>The options.</value>
-		public IDataOptions Options
-		{
-			get { return _dataOptions; }
-			set
-			{
-				_dataOptions = value as DataOptions;
-
-				if (_context == null)
-				{
-					return;
-				}
-				_context.LoadOptions = _dataOptions != null ? _dataOptions.LoadOptions : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the log.
-		/// </summary>
-		/// <value>The log.</value>
-		public System.IO.TextWriter Log
-		{
-			get
-			{
-				return _log;
-			}
-			set
-			{
-				_log = value;
-
-				if (_context == null)
-				{
-					return;
-				}
-
-				_context.Log = value;
-			}
 		}
 
 		/// <summary>

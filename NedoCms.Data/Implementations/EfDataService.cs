@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Transactions;
 using NedoCms.Data.Interfaces;
 using NedoCms.Common.Extensions;
 
-namespace NedoCms.Data.EntityFramework
+namespace NedoCms.Data.Implementations
 {
-	public class DataService<TDataContext> : IDataService, IDisposable where TDataContext : DbContext
+	public class EfDataService<TDataContext> : IDataService, IDisposable where TDataContext : DbContext
 	{
 		private readonly TDataContext _context;
 
-		public DataService(Func<TDataContext> factory)
+		public EfDataService(Func<TDataContext> factory)
 		{
 			if (factory == null) throw new ArgumentNullException("factory");
 
 			_context = factory();
-		}
-
-		public IDataOptions Options
-		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
-		}
-
-		public TextWriter Log
-		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
 		}
 
 		public IQueryable<TEntity> Select<TEntity>() where TEntity : class
@@ -119,13 +105,22 @@ namespace NedoCms.Data.EntityFramework
 		{
 			if (operation == null) throw new ArgumentNullException("operation");
 
-			using (var scope = new TransactionScope())
+			// TransactioScope not supported in SQL Compact, so falling to default transaction implementation
+			using (var transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
 			{
-				var result = operation(this);
+				try
+				{
+					var result = operation(this);
 
-				scope.Complete();
+					transaction.Commit();
 
-				return result;
+					return result;
+				}
+				catch
+				{
+					transaction.Rollback();
+					throw;
+				}
 			}
 		}
 

@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.SessionState;
+using NedoCms.Data.Implementations;
 using NedoCms.Data.Interfaces;
-using NedoCms.Data.Session;
 
 namespace NedoCms.Data
 {
@@ -19,7 +19,7 @@ namespace NedoCms.Data
 		/// <returns>Data service instance</returns>
 		protected override IDataService GetDataService(RequestContext requestContext)
 		{
-			return new DataService(this);
+			return new SessionDataService(this);
 		}
 	}
 }

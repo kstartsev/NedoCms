@@ -20,10 +20,5 @@ namespace NedoCms.Data.Interfaces
 		/// <param name="operation">The operation.</param>
 		/// <returns>The result of the operations made in the transaction.</returns>
 		TResult InTransaction<TResult>(Func<IDataService, TResult> operation);
-
-		/// <summary>
-		/// Gets or sets the log.
-		/// </summary>
-		System.IO.TextWriter Log { get; set; }
 	}
 }

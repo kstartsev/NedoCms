@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -8,28 +7,24 @@ using System.Web.Mvc;
 using NedoCms.Common.Extensions;
 using NedoCms.Data.Interfaces;
 
-namespace NedoCms.Data.Session
+namespace NedoCms.Data.Implementations
 {
 	/// <summary>
 	/// Naive data storage implementation on top of session object
 	/// </summary>
-	public sealed class DataService : IDataService
+	public sealed class SessionDataService : IDataService
 	{
 		private const string KeyPrefix = "F4A1B79190CB4012AAAD61E6DF88FC48";
 		private readonly Controller _controller;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DataService"/> class.
+		/// Initializes a new instance of the <see cref="SessionDataService"/> class.
 		/// </summary>
 		/// <param name="controller">The controller.</param>
-		public DataService(Controller controller)
+		public SessionDataService(Controller controller)
 		{
 			_controller = controller;
 		}
-
-		public IDataOptions Options { get; set; }
-
-		public TextWriter Log { get; set; }
 
 		public void InTransaction(Action<IDataService> action)
 		{

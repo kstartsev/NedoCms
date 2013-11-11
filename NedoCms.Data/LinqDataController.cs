@@ -9,7 +9,7 @@ namespace NedoCms.Data
 	{
 		protected override IDataService GetDataService(RequestContext requestContext)
 		{
-			return new DataService<TDataContext>(() => new TDataContext());
+			return new LinqDataService<TDataContext>(() => new TDataContext());
 		}
 	}
 }

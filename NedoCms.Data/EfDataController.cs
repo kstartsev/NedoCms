@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Web.Routing;
-using NedoCms.Data.EntityFramework;
+using NedoCms.Data.Implementations;
 using NedoCms.Data.Interfaces;
 
 namespace NedoCms.Data
@@ -9,7 +9,7 @@ namespace NedoCms.Data
 	{
 		protected override IDataService GetDataService(RequestContext requestContext)
 		{
-			return new DataService<TDataContext>(() => new TDataContext());
+			return new EfDataService<TDataContext>(() => new TDataContext());
 		}
 	}
 }
