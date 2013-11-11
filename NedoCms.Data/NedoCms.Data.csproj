@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EfDataController.cs" />
+    <Compile Include="Models\EF\EditorDataContext.cs" />
     <Compile Include="VoidResult.cs" />
     <Compile Include="Implementations\EfDataService.cs" />
     <Compile Include="LinqDataController.cs" />
@@ -60,14 +61,6 @@
     <Compile Include="Extensions\DataProviderExtensions.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
     <Compile Include="Interfaces\IDataService.cs" />
-    <Compile Include="Models\DataContext.ctor.cs">
-      <DependentUpon>DataContext.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataContext.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataContext.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionDataController.cs" />
     <Compile Include="Implementations\SessionDataService.cs" />
@@ -79,17 +72,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\DataContext.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataContext.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\DataContext.dbml.layout">
-      <DependentUpon>DataContext.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

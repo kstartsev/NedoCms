@@ -13,13 +13,13 @@ namespace NedoCms.Models.Page
 		/// </summary>
 		[Display(Name = "Key")]
 		[RegularExpression(@"[^<>&\|\\\[\]\{\}\$~#%\*]*", ErrorMessage = "Invalid characters")]
-		public virtual string Key { get; set; }
+		public string Key { get; set; }
 
 		/// <summary>
 		/// Gets or sets values
 		/// </summary>
 		[Display(Name = "Value")]
 		[AllowHtml]
-		public virtual string Value { get; set; }
+		public string Value { get; set; }
 	}
 }

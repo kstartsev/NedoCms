@@ -5,22 +5,34 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
 using System.Web.Mvc;
+using AutoMapper;
 using NedoCms.Common.Attributes;
 using NedoCms.Common.Extensions;
 using NedoCms.Common.Models.Sorting;
 using NedoCms.Common.Paging.Content;
+using NedoCms.Controllers;
 using NedoCms.Data;
 using NedoCms.Data.Extensions;
 using NedoCms.Data.Models;
 using NedoCms.Models.Page;
+
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PageController), "InitMapping")]
 
 namespace NedoCms.Controllers
 {
 	/// <summary>
 	/// Controller with page related actions
 	/// </summary>
-	public sealed partial class PageController : SessionDataController
+	public sealed partial class PageController : EfDataController<EditorDataContext>
 	{
+		public static void InitMapping()
+		{
+			Mapper.CreateMap<PageMetadata, PageMetadataModel>();
+			Mapper.CreateMap<Page, PageModel>()
+			      .ForMember(x => x.HasChildren, exp => exp.MapFrom(x => x.Children.Safe().Any()))
+				  .ForMember(x => x.Metadata, exp => exp.MapFrom(x => x.PageMetadatas.Safe().Select(Mapper.Map<PageMetadata, PageMetadataModel>)));
+		}
+
 		/// <summary>
 		/// Renders list of created pages
 		/// </summary>
@@ -30,7 +42,7 @@ namespace NedoCms.Controllers
 			filter.OrderBy = filter.OrderBy.Either("MenuOrder");
 			filter.OrderByDirection = filter.OrderByDirection.Either("asc");
 
-			var pages = Data.Select<Page>().Where(x => x.ParentId == null).Sort(filter).Select(x => Convert(x)).ToList();
+			var pages = Data.Select<Page>().Where(x => x.ParentId == null).Sort(filter).ToList().Select(Mapper.Map<Page, PageModel>);
 
 			return View(pages);
 		}
@@ -38,11 +50,11 @@ namespace NedoCms.Controllers
 		/// <summary>
 		/// Renders children for requested page
 		/// </summary>
-		[Ajax, HttpGet]
+		[HttpGet, Ajax]
 		public ActionResult Children(Guid page, int level)
 		{
-			var items = Data.Select<Page>().Where(x => x.ParentId == page).OrderBy(x => x.MenuOrder).Select(x => Convert(x)).ToList();
-			var model = Tuple.Create<IEnumerable<PageModel>, int>(items, level);
+			var items = Data.Select<Page>().Where(x => x.ParentId == page).OrderBy(x => x.MenuOrder).ToList().Select(Mapper.Map<Page, PageModel>);
+			var model = Tuple.Create(items, level);
 
 			return View("Index/Children", model);
 		}
@@ -50,10 +62,12 @@ namespace NedoCms.Controllers
 		/// <summary>
 		/// Renders form for page edit
 		/// </summary>
-		[HttpGet]
+		[HttpGet, Ajax]
 		public ActionResult Edit(Guid? id, Guid? parentid)
 		{
-			var model = Data.Select<Page>().Where(x => x.Id == id).ToList().Select(Convert).FirstOr(new PageModel {Parent = parentid});
+			var model = Data.Select<Page>().Where(x => x.Id == id).ToList()
+			                .Select(Mapper.Map<Page, PageModel>)
+			                .FirstOr(new PageModel {ParentId = parentid});
 
 			return View("Index/Edit", model);
 		}
@@ -73,13 +87,13 @@ namespace NedoCms.Controllers
 					{
 						x.Id = insert ? Guid.NewGuid() : x.Id;
 						x.Title = model.Title;
-						x.Type = model.PageType;
+						x.Type = model.Type;
 						x.Master = model.Master;
 						x.MenuLabel = model.MenuLabel;
 						x.MenuOrder = model.MenuOrder ?? 1;
 						x.Visible = model.Visible;
-						x.Parent = model.Parent.HasValue
-							           ? service.Select<Page>().Single(_ => _.Id == model.Parent)
+						x.Parent = model.ParentId.HasValue
+									   ? service.Select<Page>().Single(_ => _.Id == model.ParentId)
 							           : null;
 						x.Route = ToUri(model.Route);
 						x.FullRoute = RouteFor(x, model.Route); // this depends on parent, therefore it should be changed after parent modifications
@@ -217,14 +231,6 @@ namespace NedoCms.Controllers
 			return Json(true, JsonRequestBehavior.AllowGet);
 		}
 
-		/// <summary>
-		/// Action which shows help information regarding content editors
-		/// </summary>
-		public ActionResult Help()
-		{
-			return View();
-		}
-
 		private bool IsValidRoute(Guid? id, string route)
 		{
 			var page = id.HasValue
@@ -258,7 +264,9 @@ namespace NedoCms.Controllers
 
 		private static IEnumerable<Page> UnwindChildren(Page page)
 		{
-			foreach (var child in page.Children)
+			if (page == null) yield break;
+
+			foreach (var child in page.Children.Safe())
 			{
 				yield return child;
 
@@ -267,24 +275,6 @@ namespace NedoCms.Controllers
 					yield return inner;
 				}
 			}
-		}
-
-		private static PageModel Convert(Page page)
-		{
-			return new PageModel
-			{
-				Id = page.Id,
-				Title = page.Title,
-				PageType = page.Type,
-				Master = page.Master,
-				MenuLabel = page.MenuLabel,
-				MenuOrder = page.MenuOrder,
-				Parent = page.ParentId,
-				Route = page.Route,
-				Visible = page.Visible,
-				HasChildren = page.Children.Any(),
-				Metadata = page.PageMetadatas.Select(_ => new PageMetadataModel {Key = _.Key, Value = _.Value})
-			};
 		}
 	}
 }

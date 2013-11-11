@@ -1,6 +1,9 @@
-﻿using System.Web;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NedoCms.Data.Models;
 
 namespace NedoCms
 {
@@ -22,6 +25,9 @@ namespace NedoCms
 
 		protected void Application_Start()
 		{
+//			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EditorDataContext>());
+			Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
+
 			AreaRegistration.RegisterAllAreas();
 
 			RegisterGlobalFilters(GlobalFilters.Filters);

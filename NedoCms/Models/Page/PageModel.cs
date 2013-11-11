@@ -13,13 +13,13 @@ namespace NedoCms.Models.Page
 		/// <summary>
 		/// Gets or sets id of the page
 		/// </summary>
-		public virtual Guid? Id { get; set; }
+		public Guid? Id { get; set; }
 
 		/// <summary>
 		/// Gets or sets id of the parent page
 		/// </summary>
 		[Display(Name = "Parent")]
-		public virtual Guid? Parent { get; set; }
+		public Guid? ParentId { get; set; }
 
 		/// <summary>
 		/// Gets or sets name of the page
@@ -27,11 +27,11 @@ namespace NedoCms.Models.Page
 		[Required]
 		[RegularExpression(@"[^<>&\|\\\[\]\{\}\$~#%\*]*", ErrorMessage = "Invalid characters")]
 		[Display(Name = "Title")]
-		public virtual string Title { get; set; }
+		public string Title { get; set; }
 
 		[Required]
 		[Display(Name = "Page type")]
-		public short PageType { get; set; }
+		public short Type { get; set; }
 
 		/// <summary>
 		/// Gets or sets the master file for the page
@@ -39,14 +39,14 @@ namespace NedoCms.Models.Page
 		[Required]
 		[AllowHtml]
 		[Display(Name = "Master file")]
-		public virtual string Master { get; set; }
+		public string Master { get; set; }
 
 		/// <summary>
 		/// Indicates that page should be visible in front end
 		/// </summary>
 		[Required]
 		[Display(Name = "Show in front end")]
-		public virtual bool Visible { get; set; }
+		public bool Visible { get; set; }
 
 		/// <summary>
 		/// Gets or sets menu text for the page
@@ -54,14 +54,14 @@ namespace NedoCms.Models.Page
 		[Required]
 		[RegularExpression(@"[^<>&\|\\\[\]\{\}\$~#%\*]*", ErrorMessage = "Invalid characters")]
 		[Display(Name = "Menu label")]
-		public virtual string MenuLabel { get; set; }
+		public string MenuLabel { get; set; }
 
 		/// <summary>
 		/// Gets or sets page order in front end menu
 		/// </summary>
 		[Required]
 		[Display(Name = "Menu order")]
-		public virtual int? MenuOrder { get; set; }
+		public int? MenuOrder { get; set; }
 
 		/// <summary>
 		/// Gets or sets front end route for page
@@ -70,18 +70,18 @@ namespace NedoCms.Models.Page
 		[RegularExpression(@"[^<>]*", ErrorMessage = "Invalid characters")]
 		[Display(Name = "Page route")]
 		[Remote("ValidateRoute", "Page", HttpMethod = "GET", AdditionalFields = "Id")]
-		public virtual string Route { get; set; }
+		public string Route { get; set; }
 
 		/// <summary>
 		/// Indicates if page has children
 		/// </summary>
 		[Display(Name = "Has children")]
-		public virtual bool HasChildren { get; set; }
+		public bool HasChildren { get; set; }
 
 		/// <summary>
 		/// Gets or sets metadata information for the page
 		/// </summary>
 		[Display(Name = "Metadata")]
-		public virtual IEnumerable<PageMetadataModel> Metadata { get; set; } 
+		public IEnumerable<PageMetadataModel> Metadata { get; set; } 
 	}
 }

@@ -26,7 +26,7 @@ else
 		var master = masters.Where(x => x.Value == item.Master).Select(x => x.Text).FirstOrDefault().Either(item.Master);
 		var disabled = item.HasChildren ? "disabled=\"disabled\"" : "";
 
-		<tr data-page="@item.Id" data-parent="@item.Parent" data-level="@level" class="@style">
+		<tr data-page="@item.Id" data-parent="@item.ParentId" data-level="@level" class="@style">
 			<td class="w1em">
 				@if (item.HasChildren)
 				{

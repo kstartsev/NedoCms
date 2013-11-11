@@ -11,7 +11,7 @@ namespace NedoCms.Controllers
 	/// <summary>
 	/// All public pages and static front end actions stored here
 	/// </summary>
-	public sealed class FrontController : SessionDataController
+	public sealed class FrontController : EfDataController<EditorDataContext>
 	{
 		/// <summary>
 		/// Renders page with specfied id

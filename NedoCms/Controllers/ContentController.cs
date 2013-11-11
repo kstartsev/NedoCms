@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using NedoCms.Common.Paging.Content;
 using NedoCms.Data;
+using NedoCms.Data.Models;
 using NedoCms.Models;
 using NedoCms.Models.Google;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace NedoCms.Controllers
 	/// <summary>
 	/// 	Generic content container with generic actions
 	/// </summary>
-	public sealed class ContentController : SessionDataController
+	public sealed class ContentController : EfDataController<EditorDataContext>
 	{
 		/// <summary>
 		/// 	This is basic HTML content item
