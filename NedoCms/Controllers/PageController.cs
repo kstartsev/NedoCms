@@ -104,7 +104,7 @@ namespace NedoCms.Controllers
 					service.Insert(model.Metadata.Safe().Where(x => !string.IsNullOrWhiteSpace(x.Key) && !string.IsNullOrWhiteSpace(x.Value)).Select(x => new PageMetadata
 					{
 						Id = Guid.NewGuid(),
-						Page = page,
+						PageId = page.Id,
 						Key = x.Key,
 						Value = x.Value
 					}));
@@ -123,7 +123,7 @@ namespace NedoCms.Controllers
 		/// <param name="route">Suggested route</param>
 		/// <param name="id">Id of the page</param>
 		/// <returns>Validation result</returns>
-		[Ajax, HttpGet]
+		[HttpGet, Ajax]
 		public JsonResult ValidateRoute(string route, Guid? id)
 		{
 			return !IsValidRoute(id, route)
@@ -134,9 +134,7 @@ namespace NedoCms.Controllers
 		/// <summary>
 		/// Removes page with specified id from data storage
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		[Ajax, HttpPost]
+		[HttpPost, Ajax]
 		public ActionResult Delete(Guid id)
 		{
 			Data.InTransaction(service =>

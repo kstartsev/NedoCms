@@ -8,12 +8,6 @@ namespace NedoCms.Data.Models
 {
 	public class EditorDataContext : DbContext
 	{
-		public EditorDataContext()
-		{
-			Configuration.ProxyCreationEnabled = false;
-			Configuration.LazyLoadingEnabled = false;
-		}
-
 		public DbSet<Page> Pages { get; set; }
 		public DbSet<PageContent> PageContents { get; set; }
 		public DbSet<PageMetadata> PageMetadatas { get; set; }
