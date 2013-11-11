@@ -1,12 +1,19 @@
 ﻿@using NedoCms.Common.Paging
+@using NedoCms.Models.Page
+@using NedoCms.Common.Extensions
 @{
 	Layout = null;
+
+	var meta = (IEnumerable<PageMetadataModel>)ViewBag.Metadata;
 }
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Demo page</title>
-		
+		<title>@ViewBag.Title - Demo</title>
+		@foreach (var x in meta.Safe())
+		{
+			<meta name="@x.Key" content="@x.Value" />
+		}
 		<style type="text/css">
 			html {
 				min-width:1223px;

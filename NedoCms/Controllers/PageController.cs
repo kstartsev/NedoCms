@@ -173,7 +173,7 @@ namespace NedoCms.Controllers
 		/// <summary>
 		/// Renders toolbox with all actions marked with <see cref="PageContentAttribute"/>
 		/// </summary>
-		[ChildActionOnly, HttpGet]
+		[HttpGet, ChildActionOnly]
 		public ActionResult Toolbox()
 		{
 			var groups = BuildManager.GetReferencedAssemblies().Cast<Assembly>()
