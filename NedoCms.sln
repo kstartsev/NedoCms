@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NedoCms", "NedoCms\NedoCms.csproj", "{1B9E506A-8169-4477-9B94-BD7C81AC5BA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NedoCms.Data", "NedoCms.Data\NedoCms.Data.csproj", "{9613A825-3B13-43A4-9B5A-A80EBC876987}"

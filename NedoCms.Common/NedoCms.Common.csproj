@@ -1,108 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NedoCms.Common</RootNamespace>
-    <AssemblyName>NedoCms.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Attributes\AjaxAttribute.cs" />
-    <Compile Include="Attributes\OrderByAttribute.cs" />
-    <Compile Include="Attributes\OutputCacheExAttribute.cs" />
-    <Compile Include="Extensions\CacheExtensions.cs" />
-    <Compile Include="Extensions\TagBuilderExtensions.cs" />
-    <Compile Include="Extensions\HeaderExtensions.cs" />
-    <Compile Include="Extensions\CollectionExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\ConvertExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\DictionaryExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\DynamicLinq.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\EnumerableExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\FunctionalExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\HtmlExtensions.cs" />
-    <Compile Include="Extensions\HtmlPrefixScopeExtensions.cs" />
-    <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Extensions\MenuExtensions.cs" />
-    <Compile Include="Extensions\ModelStateExtensions.cs" />
-    <Compile Include="Extensions\RelfectionExtensions.cs" />
-    <Compile Include="Extensions\RequestExtensions.cs" />
-    <Compile Include="Extensions\RouteHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\RouteValueDictionaryExtensions.cs" />
-    <Compile Include="Extensions\SortingExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\StreamExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\StringExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Extensions\ValueProviderExtensions.cs" />
-    <Compile Include="Extensions\ViewDataExtensions.cs" />
-    <Compile Include="Images\ImageResult.Cache.cs" />
-    <Compile Include="Images\ImageResult.cs" />
-    <Compile Include="Images\ImageResult.Resize.cs" />
-    <Compile Include="Images\ResolveImageResult.cs" />
-    <Compile Include="Models\ErrorModel.cs" />
-    <Compile Include="Models\Menu\Descriptor.cs" />
-    <Compile Include="Models\Menu\Node.cs" />
-    <Compile Include="Models\Menu\RenderOptions.cs" />
-    <Compile Include="Models\Sorting\IOrderableQuery.cs" />
-    <Compile Include="Models\Sorting\IPagingQuery.cs" />
-    <Compile Include="Models\Sorting\PagedResult.cs" />
-    <Compile Include="Models\Sorting\SortableBase.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{7D7C7842-F884-4C5B-81A8-A635AC7AD24A}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>NedoCms.Common</RootNamespace>
+		<AssemblyName>NedoCms.Common</AssemblyName>
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<FileAlignment>512</FileAlignment>
+		<TargetFrameworkProfile />
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Configuration" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Web" />
+		<Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+		<Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Attributes\AjaxAttribute.cs" />
+		<Compile Include="Attributes\OrderByAttribute.cs" />
+		<Compile Include="Attributes\OutputCacheExAttribute.cs" />
+		<Compile Include="Extensions\CacheExtensions.cs" />
+		<Compile Include="Extensions\TagBuilderExtensions.cs" />
+		<Compile Include="Extensions\HeaderExtensions.cs" />
+		<Compile Include="Extensions\CollectionExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\ConvertExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\DictionaryExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\DynamicLinq.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\EnumerableExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\FunctionalExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\HtmlExtensions.cs" />
+		<Compile Include="Extensions\HtmlPrefixScopeExtensions.cs" />
+		<Compile Include="Extensions\ListExtensions.cs" />
+		<Compile Include="Extensions\MenuExtensions.cs" />
+		<Compile Include="Extensions\ModelStateExtensions.cs" />
+		<Compile Include="Extensions\RelfectionExtensions.cs" />
+		<Compile Include="Extensions\RequestExtensions.cs" />
+		<Compile Include="Extensions\RouteHelper.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\RouteValueDictionaryExtensions.cs" />
+		<Compile Include="Extensions\SortingExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\StreamExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\StringExtensions.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Extensions\ValueProviderExtensions.cs" />
+		<Compile Include="Extensions\ViewDataExtensions.cs" />
+		<Compile Include="Images\ImageResult.Cache.cs" />
+		<Compile Include="Images\ImageResult.cs" />
+		<Compile Include="Images\ImageResult.Resize.cs" />
+		<Compile Include="Images\ResolveImageResult.cs" />
+		<Compile Include="Models\ErrorModel.cs" />
+		<Compile Include="Models\Menu\Descriptor.cs" />
+		<Compile Include="Models\Menu\Node.cs" />
+		<Compile Include="Models\Menu\RenderOptions.cs" />
+		<Compile Include="Models\Sorting\IOrderableQuery.cs" />
+		<Compile Include="Models\Sorting\IPagingQuery.cs" />
+		<Compile Include="Models\Sorting\PagedResult.cs" />
+		<Compile Include="Models\Sorting\SortableBase.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
