@@ -3,7 +3,7 @@
 @model MapModel
 
 @{
-	var original= Model.Markers.Safe().ToArray();
+	var original = Model.Get(x => x.Markers).Safe().ToArray();
 	var markers = original.UnionIf(() => original.Length == 0, () => new MapPoint().Enumerate());
 }
 
@@ -41,7 +41,7 @@
 					<div class="form-group">
 						<label class="col-lg-3 control-label">@Html.NameFor(x => x.Type)</label>
 						<div class="col-lg-9">
-							@Html.DropDownListFor(x => x.Type, Html.ConstList(Model.Type), new { @class = "form-control" })
+							@Html.DropDownListFor(x => x.Type, Html.ConstList(Model.Get(x => x.Type, MapType.Roadmap)), new { @class = "form-control" })
 							<span>@Html.ValidationMessageFor(x => x.Type)</span>
 						</div>
 					</div>

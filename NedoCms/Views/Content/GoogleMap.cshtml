@@ -2,6 +2,11 @@
 @model NedoCms.Models.Google.MapModel
 
 @{
+	if (Model == null || Model.Center == null)
+	{
+		return;
+	}
+	
 	if (!Model.Center.Latitude.HasValue || !Model.Center.Longitude.HasValue)
 	{
 		return;
